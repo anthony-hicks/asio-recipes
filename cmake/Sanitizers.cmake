@@ -1,0 +1,23 @@
+function(target_enable_sanitizers target name)
+  message(STATUS "TARGET = ${target}")
+  message(STATUS "NAME = ${name}")
+  set(flags "-fno-omit-frame-pointer" "-fno-optimize-sibling-calls" "-g")
+
+  if(name STREQUAL "Address")
+    list(APPEND flags "-fsanitize=address" "-fsanitize-address-use-after-scope")
+  elseif(name STREQUAL "Undefined")
+    list(APPEND flags "-fsanitize=undefined,float-divide-by-zero,float-cast-overflow")
+  elseif(name STREQUAL "Thread")
+    list(APPEND flags "-fsanitize=thread")
+  elseif(name STREQUAL "Memory")
+    list(APPEND flags "-fsanitize=memory")
+  elseif(name STREQUAL "Address,Undefined")
+    list(APPEND flags "-fsanitize=address" "-fsanitize-address-use-after-scope")
+    list(APPEND flags "-fsanitize=undefined,float-divide-by-zero,float-cast-overflow")
+  endif()
+
+  message(STATUS "Enabled sanitizer flags: ${flags}")
+
+  target_compile_options(${target} PUBLIC ${flags})
+  target_link_options(${target} PUBLIC ${flags})
+endfunction()

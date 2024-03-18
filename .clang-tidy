@@ -1,0 +1,20 @@
+---
+Checks: >
+  *,
+  -abseil-*,
+  -altera-*,
+  -android-*
+  -darwin-*,
+  -fuchsia-*,
+  -linuxkernel-*,
+  -llvm*,
+  -mpi-*,
+  -objc-*,
+  -zircon-*,
+  -modernize-use-trailing-return-type
+WarningsAsErrors: >
+  *,
+HeaderFilterRegex: ''
+CheckOptions:
+  - key: readability-identifier-length.IgnoredVariableNames
+    value: ^(ec)$
