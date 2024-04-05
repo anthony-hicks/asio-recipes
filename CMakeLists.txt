@@ -19,6 +19,9 @@ endif()
 include(cmake/CPM.cmake)
 include(cmake/Sanitizers.cmake)
 
+find_package(glfw3 REQUIRED)
+find_package(OpenGL REQUIRED)
+
 CPMAddPackage("gh:gabime/spdlog@1.13.0")
 
 find_package(Threads REQUIRED)
@@ -30,7 +33,23 @@ if(asio_ADDED)
   target_link_libraries(asio INTERFACE Threads::Threads)
 endif()
 
+CPMAddPackage("gh:ocornut/imgui@1.90.4")
+if(imgui_ADDED)
+  add_library(imgui
+    ${imgui_SOURCE_DIR}/imgui.cpp
+    ${imgui_SOURCE_DIR}/imgui_draw.cpp
+    ${imgui_SOURCE_DIR}/imgui_demo.cpp
+    ${imgui_SOURCE_DIR}/imgui_tables.cpp
+    ${imgui_SOURCE_DIR}/imgui_widgets.cpp
+    ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
+    ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+  )
+  target_include_directories(imgui PUBLIC
+    ${imgui_SOURCE_DIR}
+    ${imgui_SOURCE_DIR}/backends
+  )
+endif()
+
 add_subdirectory(src)
 
 # TODO: Confirm .clang-tidy works
-# TODO: Specify whether sync or async

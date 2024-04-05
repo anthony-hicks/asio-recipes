@@ -1,6 +1,6 @@
 ---
 Language:        Cpp
-AccessModifierOffset: -4
+AccessModifierOffset: -2
 AlignAfterOpenBracket: AlwaysBreak
 AlignArrayOfStructures: Right
 AlignConsecutiveAssignments:
@@ -62,7 +62,7 @@ BraceWrapping:
   AfterControlStatement: Never
   AfterEnum:       false
   AfterExternBlock: false
-  AfterFunction:   false
+  AfterFunction:   true
   AfterNamespace:  false
   AfterObjCDeclaration: false
   AfterStruct:     false
@@ -134,7 +134,7 @@ InsertTrailingCommas: Wrapped
 IntegerLiteralSeparator:
   Binary:          0
   BinaryMinDigits: 0
-  Decimal:         3
+  Decimal:         0
   DecimalMinDigits: 0
   Hex:             0
   HexMinDigits:    0
