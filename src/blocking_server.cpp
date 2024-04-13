@@ -53,6 +53,7 @@ void session(tcp::socket socket)
 int main(int argc, char* argv[])
 {
   spdlog::set_level(spdlog::level::debug);
+  spdlog::flush_on(spdlog::level::trace);
 
   if (argc != 2) {
     std::cerr << std::format("usage: {} <port>", argv[0]);
