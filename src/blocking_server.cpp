@@ -26,27 +26,29 @@ void session(tcp::socket socket)
 
   std::array<char, 1024> buf{};
 
-  // Read message from the client
-  std::size_t bytes_read = socket.read_some(asio::buffer(buf), ec);
+  while (true) {
+    // Read message from the client
+    std::size_t bytes_read = socket.read_some(asio::buffer(buf), ec);
 
-  if (ec == asio::error::eof) {
-    spdlog::info("{}: connection closed by peer", port);
-    return;
-  }
+    if (ec == asio::error::eof) {
+      spdlog::info("{}: connection closed by peer", port);
+      return;
+    }
 
-  if (ec) {
-    spdlog::error("{}: read_some: {}", port, ec.message());
-    return;
-  }
+    if (ec) {
+      spdlog::error("{}: read_some: {}", port, ec.message());
+      return;
+    }
 
-  spdlog::info("{}: {}", port, std::string_view(buf.data(), bytes_read));
+    spdlog::info("{}: {}", port, std::string_view(buf.data(), bytes_read));
 
-  // Echo the message back to the client
-  asio::write(socket, asio::buffer(buf, bytes_read), ec);
+    // Echo the message back to the client
+    asio::write(socket, asio::buffer(buf, bytes_read), ec);
 
-  if (ec) {
-    spdlog::error("{}: write: {}", port, ec.message());
-    return;
+    if (ec) {
+      spdlog::error("{}: write: {}", port, ec.message());
+      return;
+    }
   }
 }
 

@@ -124,15 +124,13 @@ int main(int argc, char* argv[])
   // Get input from the user
   std::array<char, 1024> buf{};
 
-  std::cout << "Enter message: ";
-  std::string message;
-  std::getline(std::cin, message);
+  while (true) {
+    std::cout << "Enter message: ";
+    std::string message;
+    std::getline(std::cin, message);
 
-  client.async_write(message);
-
-  // If we immediately stop the io_context, the write never
-  // occurs.
-  std::this_thread::sleep_for(1ms);
+    client.async_write(message);
+  }
 
   io_context.stop();
 
